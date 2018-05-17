@@ -1,0 +1,348 @@
+<html lang="en"><head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>TUTD Forecasting</title>
+    <style>
+
+        .btn-file {
+        position: relative;
+        overflow: hidden;
+    }
+    .btn-file input[type=file] {
+        position: absolute;
+        top: 0;
+        right: 0;
+        min-width: 100%;
+        min-height: 100%;
+        font-size: 100px;
+        text-align: right;
+        filter: alpha(opacity=0);
+        opacity: 0;
+        outline: none;
+        background: white;
+        cursor: inherit;
+        display: block;
+    }
+    
+    #img-upload #img-download{
+        width: 100%;
+    }
+    </style>
+    <Style>
+        .loading,.loading>td,.loading>th,.nav li.loading.active>a,.pagination li.loading,.pagination>li.active.loading>a,.pager>li.loading>a{
+        background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, rgba(0, 0, 0, 0) 25%, rgba(0, 0, 0, 0) 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, rgba(0, 0, 0, 0) 75%, rgba(0, 0, 0, 0));
+        background-size: 40px 40px;
+    animation: 2s linear 0s normal none infinite progress-bar-stripes;
+    -webkit-animation: progress-bar-stripes 2s linear infinite;
+    }
+    .btn.btn-default.loading,input[type="text"].loading,select.loading,textarea.loading,.well.loading,.list-group-item.loading,.pagination>li.active.loading>a,.pager>li.loading>a{
+        background-image: linear-gradient(45deg, rgba(35, 46, 53, 0.15) 25%, rgba(0, 0, 0, 0) 25%, rgba(0, 0, 0, 0) 50%, rgba(35, 46, 53, 0.15) 50%, rgba(35, 46, 53, 0.15) 75%, rgba(0, 0, 0, 0) 75%, rgba(0, 0, 0, 0));
+    }
+        </Style>
+    <!-- Bootstrap Core CSS -->
+    <link href=" {{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+
+    <!-- MetisMenu CSS -->
+    <link href=" {{ url_for('static', filename='vendor/metisMenu/metisMenu.min.css') }}" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href=" {{ url_for('static', filename='dist/css/sb-admin-2.css') }}" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href=" {{ url_for('static', filename='vendor/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+    
+    <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html">Cognizant</a>
+            </div>
+            <!-- /.navbar-header -->
+
+            
+            <!-- /.navbar-top-links -->
+
+            
+            <!-- /.navbar-static-side -->
+        </nav>
+
+        <div class="container">
+
+
+            <div class="row">
+                        <div class="col-lg-12" style="
+        text-align:  center;
+        ">
+                            <h1 id="alert" class="page-header">Object Detection</h1>
+                             <!-- {% with messages = get_flashed_messages(with_categories=true) %}
+                            {% if messages %}
+                            {% for category, message in messages %}
+                            <div class="alert alert-{{ category }} alert-dismissible">
+                                <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+                                <strong>{{message}}</strong> 
+                              </div> 
+                           
+                              {% endfor %}
+                             
+                            {% endif %}
+                          {% endwith %}  -->
+                        </div>
+                        <!-- /.col-lg-12 -->
+                    </div>
+        <div class="row">
+        <form id="myform" action="headCount/" method="Post" enctype = "multipart/form-data">
+            <div class="col-lg-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <i class="fa fa-bar-chart-o fa-fw"></i> Enter Required Details
+                        <div class="pull-right">
+                             <div class="btn-group">
+                                <input type="reset" class="btn btn-default btn-xs" vaalue="Reset" />
+                                 </div>  
+                                    
+                              <!--
+                                <ul class="dropdown-menu pull-right" role="menu">
+                                    <li><a href="#">Action</a>
+                                    </li>
+                                    <li><a href="#">Another action</a>
+                                    </li>
+                                    <li><a href="#">Something else here</a>
+                                    </li>
+                                    <li class="divider"></li>
+                                    <li><a href="#">Separated link</a>
+                                    </li>
+                                </ul>
+                            </div> -->
+                        </div>
+                    </div>
+                    <!-- /.panel-heading -->
+                    <div class="panel-body">
+                            <div class="form-group" style="padding-bottom: 56.25%; padding-top: 25px;height: 0;position: relative;">
+                                    <img style="background:white;position: absolute;top: 0;left: 0;width: 100%;height: 100%;" id='img-upload'/>
+                                </div>
+                            <div class="form-group">
+                                    <label>Upload Image</label>
+                                    <div class="input-group">
+                                        <span class="input-group-btn">
+                                            <span class="btn btn-default btn-file">
+                                                Browse… <input type="file" name="pic1" id="imgInp">
+                                            </span>
+                                        </span>
+                                        <input type="text" class="form-control" readonly>
+                                    </div>
+                                    
+                                </div>
+        
+        
+                                <div class="form-group">
+                                        <label>Name of the Object to be sold</label>
+                                        <input class="form-control"   type='text' name="my_object" accept="text/*">
+                                     
+                                    </div>
+        
+                                    <div class="form-group">
+                                            <label>Select Model</label>
+                                            <select class="form-control" name="model">
+                                                    <option>--select a model--</option>
+                                                <option>Coco</option>
+                                                <!-- <option>Google</option>
+                                                <option>3</option>
+                                                <option>4</option>
+                                                <option>5</option> -->
+                                            </select>
+                                        </div>
+        
+                                        <!-- <div class="form-group">
+                                                <label>Detection Options</label>
+                                                <select class="form-control">
+                                                        <option>--select an option--</option>
+                                                    <option>Remove everything except the target</option>
+                                                    <option>Blur other objects - dont process target</option>
+                                                    <option>3</option>
+                                                    <option>4</option>
+                                                    <option>5</option>
+                                                </select>
+                                            </div> -->
+                                            <div class="form-group">
+                                            <button onclick="submit_button()" type="button" id="loadBtn" class="btn btn-default">Detect(Remove everything except the target)</button>
+                                            </div>
+                                            <div class="form-group">
+                                            <button type="button" class="btn btn-default">Detect(Blur other objects - dont process target)</button>
+                                            </div>
+                                        
+                        <!-- <div id="morris-area-chart"></div> -->
+                    </div>
+                    <!-- /.panel-body -->
+                </div>
+                <!-- /.panel -->
+               
+                <!-- /.panel -->
+            </div>
+        
+        </form>
+            <div class="col-lg-6">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-bar-chart-o fa-fw"></i> Result
+                            <div class="pull-right">
+                                <!-- <div class="btn-group">
+                                    <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                                        Actions
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu pull-right" role="menu">
+                                        <li><a href="#">Action</a>
+                                        </li>
+                                        <li><a href="#">Another action</a>
+                                        </li>
+                                        <li><a href="#">Something else here</a>
+                                        </li>
+                                        <li class="divider"></li>
+                                        <li><a href="#">Separated link</a>
+                                        </li>
+                                    </ul>
+                                </div> -->
+                            </div>
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            
+                            <div class="form-group" style="padding-bottom: 56.25%; padding-top: 25px;height: 0;position: relative;">
+                                <img style="background:white;position: absolute;top: 0;left: 0;width: 100%;height: 100%;" id='img-download'/>
+                            </div>
+
+                               
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                   
+                    <!-- /.panel -->
+                </div>
+        </div>
+        
+        </div>
+
+    <!-- jQuery -->
+    <script src=" {{ url_for('static', filename='vendor/jquery/jquery.min.js') }}"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src=" {{ url_for('static', filename='vendor/bootstrap/js/bootstrap.min.js') }}"></script>
+
+    <!-- Metis Menu Plugin JavaScript -->
+    <script src=" {{ url_for('static', filename='vendor/metisMenu/metisMenu.min.js') }}"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src=" {{ url_for('static', filename='dist/js/sb-admin-2.js') }}"></script>
+
+    <script type=text/javascript>
+         $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+       </script>
+ 
+ <script>
+ //https://bootsnipp.com/snippets/featured/animation-loading-state
+     function submit_button(){
+ 
+ 
+        
+  //   $('#upload-file-btn').click(function() {
+         var form_data = new FormData($('#myform')[0]);
+         $("#loadBtn").addClass("loading");
+
+         $.ajax({
+             type: 'POST',
+             url: $SCRIPT_ROOT + '/headCount/',
+             data: form_data,
+             contentType: false,
+             cache: false,
+             processData: false,
+             async: false,
+             success: function(data) {
+                    if(data.success)
+                    {
+                        document.getElementById("img-download").src=data.output;
+                        $("#loadBtn").removeClass("loading");
+
+                    }
+                    else
+                    {
+                        var div = document.createElement('div');
+
+                        div.className = 'alert alert-'+ data.category+ ' alert-dismissible';
+                       
+                              
+                           
+                        div.innerHTML =
+                        '  <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>\
+                                <strong>'+data.error_msg+'</strong> ';
+
+                        document.getElementById('alert').appendChild(div);
+                        $("#loadBtn").removeClass("loading");
+                    }
+             },
+         });
+    // });
+ 
+     }
+ </script>
+ 
+     <script>
+     $(document).ready( function() {
+         $(document).on('change', '.btn-file :file', function() {
+         var input = $(this),
+             label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+         input.trigger('fileselect', [label]);
+         });
+ 
+         $('.btn-file :file').on('fileselect', function(event, label) {
+             
+             var input = $(this).parents('.input-group').find(':text'),
+                 log = label;
+             
+             if( input.length ) {
+                 input.val(log);
+             } else {
+                 if( log ) alert(log);
+             }
+         
+         });
+         function readURL(input) {
+             if (input.files && input.files[0]) {
+                 var reader = new FileReader();
+                 
+                 reader.onload = function (e) {
+                     $('#img-upload').attr('src', e.target.result);
+                 }
+                 
+                 reader.readAsDataURL(input.files[0]);
+             }
+         }
+ 
+         $("#imgInp").change(function(){
+             readURL(this);
+         }); 	
+     });
+     </script>
+
+
+</body></html>
